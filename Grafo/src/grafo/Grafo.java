@@ -13,14 +13,14 @@ import java.util.Scanner;
  * @author fabiani
  */
 public class Grafo extends javax.swing.JFrame {
-
+    int nver;
     /**
      * Creates new form Grafo
      */
     public Grafo() {
         initComponents();
-        CantidadAristas.setSize(540, 267);
-        CantidadAristas.setLocationRelativeTo(null);
+        GenerarAristas.setSize(540, 267);
+        GenerarAristas.setLocationRelativeTo(null);
     }
 
     /**
@@ -32,38 +32,43 @@ public class Grafo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        CantidadAristas = new javax.swing.JFrame();
+        GenerarAristas = new javax.swing.JFrame();
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        TextAristas = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        nvertices = new javax.swing.JTextField();
+        Nvertices = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
         jButton2.setText("Generar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout CantidadAristasLayout = new javax.swing.GroupLayout(CantidadAristas.getContentPane());
-        CantidadAristas.getContentPane().setLayout(CantidadAristasLayout);
-        CantidadAristasLayout.setHorizontalGroup(
-            CantidadAristasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CantidadAristasLayout.createSequentialGroup()
+        javax.swing.GroupLayout GenerarAristasLayout = new javax.swing.GroupLayout(GenerarAristas.getContentPane());
+        GenerarAristas.getContentPane().setLayout(GenerarAristasLayout);
+        GenerarAristasLayout.setHorizontalGroup(
+            GenerarAristasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GenerarAristasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TextAristas, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addContainerGap(77, Short.MAX_VALUE))
         );
-        CantidadAristasLayout.setVerticalGroup(
-            CantidadAristasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CantidadAristasLayout.createSequentialGroup()
+        GenerarAristasLayout.setVerticalGroup(
+            GenerarAristasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GenerarAristasLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(CantidadAristasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(GenerarAristasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(246, Short.MAX_VALUE))
+                    .addComponent(TextAristas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(234, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,7 +90,7 @@ public class Grafo extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(nvertices, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Nvertices, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap(117, Short.MAX_VALUE))
@@ -96,7 +101,7 @@ public class Grafo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(nvertices, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Nvertices, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addContainerGap(259, Short.MAX_VALUE))
         );
@@ -107,14 +112,23 @@ public class Grafo extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Scanner sc = new Scanner(System.in);
-        int n = Integer.parseInt(nvertices.getText());
-        for (int i = 0; i < n; i++) {
-            CantidadAristas.setVisible(true);
-            jTextField2.setText("Cantidad de aristas vertice N°" + (i + 1));
-            int cantidad = sc.nextInt();
-            CantidadAristas.setVisible(false);
+        ArrayList<Vertice> vertices = new ArrayList<>();
+        nver = Integer.parseInt(Nvertices.getText());
+        for (int i = 0; i < nver; i++) {
+            Vertice nuevo = new Vertice(1+i);
+            vertices.add(nuevo);
         }
+        this.setVisible(false);
+        GenerarAristas.setVisible(true);
+        TextAristas.setText("N° de aristas vertice 0");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        for (int i = 0; i < nver; i++) {
+            
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,12 +166,12 @@ public class Grafo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFrame CantidadAristas;
+    private javax.swing.JFrame GenerarAristas;
+    private javax.swing.JTextField Nvertices;
+    private javax.swing.JLabel TextAristas;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField nvertices;
     // End of variables declaration//GEN-END:variables
 }

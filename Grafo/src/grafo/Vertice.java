@@ -13,6 +13,14 @@ import java.util.ArrayList;
  */
 public class Vertice {
     ArrayList<Arista> aristas = new ArrayList<>();
+    int Numero;
+
+    public Vertice(int Numero) {
+        this.Numero = Numero;
+    }
+
+
+    
 
     
     
