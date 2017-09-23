@@ -7,19 +7,26 @@ package grafo;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author fabiani
  */
 public class Grafo extends javax.swing.JFrame {
+
     int nver;
+    int p = 0;
+    int s = 0;
+    ArrayList<String> direccionv = new ArrayList<>();
+    ArrayList<Vertice> vertices = new ArrayList<>();
+
     /**
      * Creates new form Grafo
      */
     public Grafo() {
         initComponents();
-        GenerarAristas.setSize(540, 267);
+        GenerarAristas.setSize(600, 267);
         GenerarAristas.setLocationRelativeTo(null);
     }
 
@@ -39,6 +46,7 @@ public class Grafo extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         Nvertices = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jButton2.setText("Generar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -53,22 +61,25 @@ public class Grafo extends javax.swing.JFrame {
             GenerarAristasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(GenerarAristasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(TextAristas, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TextAristas, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2))
         );
         GenerarAristasLayout.setVerticalGroup(
             GenerarAristasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(GenerarAristasLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(GenerarAristasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
-                    .addComponent(TextAristas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(234, Short.MAX_VALUE))
+                .addGroup(GenerarAristasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(GenerarAristasLayout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(GenerarAristasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(GenerarAristasLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(TextAristas, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -79,6 +90,13 @@ public class Grafo extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Mostrar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -94,6 +112,10 @@ public class Grafo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap(117, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(147, 147, 147))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,7 +125,9 @@ public class Grafo extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(Nvertices, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addContainerGap(259, Short.MAX_VALUE))
+                .addGap(63, 63, 63)
+                .addComponent(jButton3)
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         pack();
@@ -111,24 +135,56 @@ public class Grafo extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Scanner sc = new Scanner(System.in);
-        ArrayList<Vertice> vertices = new ArrayList<>();
         nver = Integer.parseInt(Nvertices.getText());
         for (int i = 0; i < nver; i++) {
-            Vertice nuevo = new Vertice(1+i);
+            Vertice nuevo = new Vertice(1 + i);
             vertices.add(nuevo);
         }
         this.setVisible(false);
         GenerarAristas.setVisible(true);
-        TextAristas.setText("N° de aristas vertice 0");
+        TextAristas.setText("Digite hacia que vertices van dirigidas las aristas del vertice " + 1 + " separadas por ,");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        for (int i = 0; i < nver; i++) {
-            
+        String direccion = jTextField1.getText();
+        direccionv.add(direccion);
+        p++;
+        if (p < nver) {
+            TextAristas.setText("Digite hacia que vertices van dirigidas las aristas del vertice " + (p + 1) + " separadas por ,");
+            jTextField1.setText("");
+        } else {
+            this.setVisible(true);
+            GenerarAristas.setVisible(false);
         }
+        String dir = direccionv.get(s);
+        String[] separar = dir.split(",");
+        int f = separar.length;
+        for (int i = 0; i < f; i++) {
+            Vertice n = vertices.get(s);
+            for (int j = 0; j < vertices.size(); j++) {
+                int y = Integer.parseInt(separar[i]);
+                if (vertices.get(j).Numero == y) {
+                    String peso = JOptionPane.showInputDialog("Digite peso de arista que va de " + n.Numero + " a " + vertices.get(j).Numero);
+                    int peso1 = Integer.parseInt(peso);
+                    Arista nueva = new Arista(n, vertices.get(j), peso1);
+                    n.aristas.add(nueva);
+                }
+            }
+        }
+        s++;
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        for (int i = 0; i < nver; i++) {
+            Vertice l = vertices.get(i);
+            System.out.println(l.Numero);
+            for (int j = 0; j < l.aristas.size(); j++) {
+                System.out.println(l.aristas.get(j).peso);
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,6 +227,7 @@ public class Grafo extends javax.swing.JFrame {
     private javax.swing.JLabel TextAristas;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
